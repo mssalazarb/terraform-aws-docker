@@ -1,0 +1,40 @@
+{
+    "__comentario__": "Cuando se va a setear variables con variables de ambiente se utiliza la nomenclatura {{env `XXXX`}}",
+    "__comentario2__": "Cuando se va a utilizar variables declaradas se utiliza la nomenclatura {{user `XXXX`}}",
+
+    "variables": {
+        "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+        "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "access_key": "{{user `aws_access_key`}}",
+            "secret_key": "{{user `aws_secret_key`}}",
+            "region": "us-east-1",
+            "source_ami": "id_del_ami_en_aws",
+            "source_ami_filter": {
+                "owners": ["id_del_owner_ami_en_aws"],
+                "most_recent": true
+            },
+            "instance_type": "t2.micro",
+            "ssh_username": "centos",
+            "ami_name": "packer-demo" 
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "./scripts/packer-key.pub",
+            "destination": "~/.ssh/"
+        },
+        {
+            "type": "shell",
+            "inline": ["cat ~/.ssh/packer-key.pub >> ~/.ssh/authorizaed_keys"]
+        },
+        {
+            "type": "shell",
+            "script": "./scripts/install-docker.sh"
+        }
+    ]
+}
