@@ -130,3 +130,18 @@ Las variables dentro de Terraform se deben definir e instanciar, una buena prác
 Terraform nos permite usar variables de tipo String, List y Map. A cada variable podemos añadirle un valor por default, una descripción y el tipo de la variable, actualmente Terraform identifica el tipo de variable automáticamente.
 
 El archivo donde asignamos los valores de las variables debe terminar en .tfvars.
+
+## Ejecutar un archivo de definición con variables
+
+Validamos el archivo de definición que hemos creado indicado el archivo donde se ecuentran definidas nuestras variables
+
+```shell
+$ terraform plan -var-file dev.tfvars
+```
+
+Si el archivo es válido, procedemos a ejecutarlo indicado el archivo donde se ecuentran definidas nuestras variables
+
+```shell
+$ terraform apply -var-file dev.tfvars
+```
+
