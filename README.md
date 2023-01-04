@@ -92,3 +92,41 @@ Packer es una herramienta para construir infraestructura inmutable desarrollada 
 > provisioners: acá personalizamos nuestra imagen, añadir paquetes, crear directorios, definir el estado de la infraestructura, etc.
 
 > post-processors: podemos tener archivos de salida y ejecutar comandos después de haber creado la infraestructura, todo corre de manera local.
+
+
+# Ejecutar un archivo de definición de Terraform
+
+> **Nota:** se debe validar que nuestro sistema tenga configurado como variables de ambiente las credenciales de nuestro proveedor, como en este caso es AWS, nuestras variables de ambiente deben ser: **AWS_ACCESS_KEY_ID** y **AWS_SECRET_ACESS_KEY**
+
+Una vez que se haya creado el o los archivos de definición de Terraform, se debe ejecutar el siguiente comando para que terraform instale las librerías o dependencias necesarias:
+
+```shell
+$ terraform init
+```
+
+Cuando las dependencias se hayan instalado correctamente, debemos ejecutar el siguiente comando para validar que el archivo de definición esté correctamente creado:
+
+```shell
+$ terraform validate
+```
+
+Si el archivo de definición es correcto, procedemos a ejecutar el siguiente comando que nos indicará cuales son las modificaciones, correcciones o caracteristicas con las cuales se va aprovisionar nuestro recurso:
+
+```shell
+$ terraform plan
+```
+
+Una vez validadas las configuraciones, para aprovisionar nuestro recurso debemos ejecutar el siguiente comando:
+
+```shell
+$ terraform apply
+```
+# Variables en Terraform
+
+Cuando todos los valores se encuentran ya definidos en un archivo de configuración ocasiona que la configuración no sea escalable. Para esto, Terraform nos permite que en lugar de añadir valores estáticos podamos definir nuestro archivo con variables.
+
+Las variables dentro de Terraform se deben definir e instanciar, una buena práctica es tener definidas las variables en un archivo e instanciarse en otro.
+
+Terraform nos permite usar variables de tipo String, List y Map. A cada variable podemos añadirle un valor por default, una descripción y el tipo de la variable, actualmente Terraform identifica el tipo de variable automáticamente.
+
+El archivo donde asignamos los valores de las variables debe terminar en .tfvars.
